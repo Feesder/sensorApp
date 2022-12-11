@@ -7,6 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="border">#2B2B2C</color>
     <color name="background_card">#1C1C1C</color>
-    <color name="background_gas">#5198EB</color>
+    <color name="background_status">#18C62A</color>
+    <color name="background_damp">#5198EB</color>
+    <color name="background_temp">#CD223C</color>
+    <color name="background_gas">#E6CD2C</color>
+    <color name="button_green">#8ac186</color>
+    <color name="button_white">#f4f5f8</color>
 </resources>
