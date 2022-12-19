@@ -6,8 +6,11 @@ import static com.sensorapp.util.NetworkUtil.getResponseFromURL;
 import static java.lang.Thread.sleep;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.widget.TextView;
@@ -70,7 +73,12 @@ public class MainActivity extends AppCompatActivity {
         temp = findViewById(R.id.temp);
         gas = findViewById(R.id.gas);
         damp = findViewById(R.id.damp);
-        startService(new Intent(this, MainService.class));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ContextCompat.startForegroundService(getApplication(), new Intent(getApplication(), MainService.class));
+        } else {
+            startService(new Intent(getApplication(), MainService.class));
+        }
 
         new Thread(() -> {
             while (true) {

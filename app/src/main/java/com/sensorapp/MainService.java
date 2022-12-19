@@ -7,21 +7,26 @@ import static java.lang.Thread.sleep;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.os.VibratorManager;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.sensorapp.exception.NullResponseException;
@@ -34,20 +39,19 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URL;
 
-public class MainService extends IntentService {
+public class MainService extends Service {
 
     private final long time = 20000;
     private final long[] pattern = new long[] {time, 1000};
+
+    private final String FOREGROUND_NOTIFICATION_ID = "foreground_id";
+    private final String FOREGROUND_NAME = "foregroun";
 
     private MediaPlayer ringtone;
     private AudioManager audio;
     private Vibrator vibrator;
     private NotificationUtil notificationUtil;
     private NotificationManager notificationManager;
-
-    public MainService() {
-        super("MainService");
-    }
 
     class SensorQueryTask extends AsyncTask<URL, Void, String> {
 
@@ -100,6 +104,11 @@ public class MainService extends IntentService {
         audio = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         notificationUtil = new NotificationUtil();
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
+            startMyOwnForeground();
+        else
+            startForeground(1, new Notification());
     }
 
     @Override
@@ -108,7 +117,7 @@ public class MainService extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         new Thread(() -> {
             while (true) {
                 try {
@@ -119,6 +128,33 @@ public class MainService extends IntentService {
                 }
             }
         }).start();
+
+        return START_STICKY;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    protected void startMyOwnForeground() {
+        Intent notificationIntent = new Intent(this, MainService.class);
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(this, 0, notificationIntent,
+                        PendingIntent.FLAG_IMMUTABLE);
+
+        NotificationChannel channel = new NotificationChannel(FOREGROUND_NOTIFICATION_ID, FOREGROUND_NAME, NotificationManager.IMPORTANCE_NONE);
+        channel.setLightColor(Color.BLUE);
+        channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        notificationManager.createNotificationChannel(channel);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, FOREGROUND_NOTIFICATION_ID);
+        Notification notification = notificationBuilder
+                .setOngoing(true)
+                .setContentTitle("Приложение работает")
+                .setSmallIcon(R.drawable.ic_baseline_cloud_queue_24)
+                .setPriority(NotificationManager.IMPORTANCE_MIN)
+                .setCategory(Notification.CATEGORY_SERVICE)
+                .setContentIntent(pendingIntent)
+                .build();
+
+        startForeground(105, notification);
     }
 
     protected void getNotification(NotificationInfo info) {
