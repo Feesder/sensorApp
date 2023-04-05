@@ -12,11 +12,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.sensorapp.exception.NullResponseException;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
             try {
-                JSONObject jsonObject = new JSONObject(response);
+                JSONArray jsonArray = new JSONArray(response);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                System.out.println(jsonObject);
                 status.setText("Статус: устройство работает");
                 gas.setText("Газ: " + jsonObject.getInt("gas"));
                 damp.setText("Влажность: " + jsonObject.getInt("damp"));
@@ -69,10 +73,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ImageButton reportButton = (ImageButton) findViewById(R.id.report_button);
         status = findViewById(R.id.status);
         temp = findViewById(R.id.temp);
         gas = findViewById(R.id.gas);
         damp = findViewById(R.id.damp);
+
+        reportButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, TrackActivity.class));
+            }
+        });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             ContextCompat.startForegroundService(getApplication(), new Intent(getApplication(), MainService.class));

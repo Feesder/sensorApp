@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/report"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_report_border"
+    android:orientation="vertical">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        app:cardBackgroundColor="@color/background_gas"
+        app:cardCornerRadius="3dp">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_cloud_queue_24" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/gas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/sf_pro_display_light"
+        android:text="Газ: "
+        android:textColor="@color/white"
+        android:textSize="14sp">
+
+    </TextView>
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        app:cardBackgroundColor="@color/background_temp"
+        app:cardCornerRadius="3dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_device_thermostat_24" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/temp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/sf_pro_display_light"
+        android:text="Температура: "
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        app:cardBackgroundColor="@color/background_damp"
+        app:cardCornerRadius="3dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_baseline_water_24" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/damp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/sf_pro_display_light"
+        android:text="Влажность: "
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+</LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        app:cardBackgroundColor="@color/background_date"
+        app:cardCornerRadius="3dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/baseline_update_24" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/sf_pro_display_light"
+        android:text="Дата: "
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+</LinearLayout>
+</LinearLayout>

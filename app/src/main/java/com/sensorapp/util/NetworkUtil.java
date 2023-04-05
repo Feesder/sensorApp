@@ -13,9 +13,9 @@ import java.util.Scanner;
 
 public class NetworkUtil {
 
-    static final String url = "https://fathomless-plains-10651.herokuapp.com/report";
-    static final String id = "id";
-    static final String deviceId = "639ee66910799b661ac479cb";
+    static final String url = "https://sensor-rest-api.herokuapp.com/report";
+    static final String id = "deviceId";
+    static final String deviceId = "9";
 
     public static URL getGenerateUrl() {
         try {

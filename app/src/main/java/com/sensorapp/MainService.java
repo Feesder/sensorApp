@@ -33,6 +33,7 @@ import com.sensorapp.exception.NullResponseException;
 import com.sensorapp.util.NotificationInfo;
 import com.sensorapp.util.NotificationUtil;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -73,7 +74,8 @@ public class MainService extends Service {
             }
 
             try {
-                JSONObject jsonObject = new JSONObject(response);
+                JSONArray jsonArray = new JSONArray(response);
+                JSONObject jsonObject  = jsonArray.getJSONObject(0);
 
                 if(ringtone != null && vibrator != null) {
                     ringtone.stop();
